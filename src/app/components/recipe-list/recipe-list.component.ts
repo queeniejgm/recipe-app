@@ -24,8 +24,13 @@ export class RecipeListComponent implements OnInit {
     return 'http://localhost:3001' + fileName;
   }
 
+  editRecipe(recipe: Recipe) {
+    this.store.dispatch(new SetSelectedRecipe(recipe));
+    this.router.navigate(['../recipe-form']);
+  }
+
   viewRecipe(recipe: Recipe) {
     this.store.dispatch(new SetSelectedRecipe(recipe));
-    this.router.navigate(['../recipe-details']);
+    this.router.navigate(['/recipe-details']);
   }
 }

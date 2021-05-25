@@ -1,7 +1,7 @@
 <div class="card-group">
   <div class="card mx-1" *ngFor="let recipe of recipeList$ | async">
     <img
-      [src]="getRecipeThumbnail(recipe.images.small)"
+      [src]="getRecipeThumbnail(recipe.images.medium)"
       class="card-img-top"
       [alt]="recipe.title"
     />
@@ -21,7 +21,13 @@
         >
           View
         </button>
-        <button type="button" class="btn btn-primary pull-right">Edit</button>
+        <button
+          type="button"
+          class="btn btn-primary pull-right"
+          (click)="editRecipe(recipe)"
+        >
+          Edit
+        </button>
         <button type="button" class="btn btn-primary pull-right">Delete</button>
       </p>
     </div>

@@ -1,0 +1,27 @@
+.recipe-detail {
+  .recipe-image-header {
+    // width: 50%;
+  }
+
+  .card-img-overlay {
+    height: max-content;
+    .recipe-name {
+      background: white;
+      color: white;
+      padding: 0.5em;
+      margin: 0;
+      background-color: rgba(0, 0, 0, 0.3);
+    }
+  }
+
+  .ingredients-list {
+    .ingredient-item {
+      .ingredient-name {
+        text-transform: capitalize;
+      }
+      .quantity {
+        float: right;
+      }
+    }
+  }
+}

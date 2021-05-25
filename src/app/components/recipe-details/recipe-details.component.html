@@ -1,0 +1,74 @@
+<div class="container recipe-detail">
+  <div class="row">
+    <div class="col-6 offset-3">
+      <div class="card mb-3">
+        <img
+          [src]="getRecipeThumbnail((selectedRecipe$ | async)?.images?.full)"
+          class="card-img-top recipe-image-header"
+          alt="..."
+        />
+        <div class="card-img-overlay">
+          <h5 class="card-title recipe-name">
+            {{ (selectedRecipe$ | async)?.title }}
+            <h6 class="card-text">
+              {{ (selectedRecipe$ | async)?.description }}
+            </h6>
+          </h5>
+        </div>
+        <div class="card-body">
+          <p class="card-text">
+            <small class="text-muted">Last updated 3 mins ago</small>
+          </p>
+          <p class="card-text">
+            <b>Servings:</b> {{ (selectedRecipe$ | async)?.servings }}
+          </p>
+          <p class="card-text">
+            <b>Prep Time:</b> {{ (selectedRecipe$ | async)?.prepTime }}
+          </p>
+          <p class="card-text">
+            <b>Cook Time:</b> {{ (selectedRecipe$ | async)?.cookTime }}
+          </p>
+          <p class="card-text">
+            <b>Ingredients:</b>
+          </p>
+          <ul class="list-group list-group-flush card-text ingredients-list">
+            <li
+              class="list-group-item ingredient-item"
+              *ngFor="let ingredient of (selectedRecipe$ | async)?.ingredients"
+            >
+              <label class="pull-left ingredient-name">
+                {{ ingredient.name }}
+              </label>
+              <span class="badge rounded-pill bg-primary quantity"
+                >{{ ingredient.amount }} {{ ingredient.measurement }}</span
+              >
+            </li>
+          </ul>
+          <p class="card-text">
+            <b>Directions:</b>
+          </p>
+          <ol class="list-group list-group-numbered">
+            <li
+              class="list-group-item"
+              *ngFor="let direction of (selectedRecipe$ | async)?.directions"
+            >
+              <label class="pull-left ingredient-name">
+                {{ direction.instructions }}
+              </label>
+            </li>
+          </ol>
+        </div>
+
+        <div class="card-footer">
+          <button
+            type="button"
+            class="btn btn-primary pull-right"
+            (click)="backToList()"
+          >
+            Back
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

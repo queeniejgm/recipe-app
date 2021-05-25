@@ -1,1 +1,187 @@
-<p>recipe-form works!</p>
+<div class="card mt-3">
+  <div class="card-body">
+    <form [formGroup]="recipeForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label class="col-md-4">Title</label>
+        <input
+          type="text"
+          class="form-control"
+          formControlName="title"
+          #title
+        />
+        <div
+          *ngIf="
+            recipeForm.controls['title'].invalid &&
+            (recipeForm.controls['title'].dirty ||
+              recipeForm.controls['title'].touched)
+          "
+          class="alert alert-danger"
+        >
+          <div
+            *ngIf="
+              recipeForm.controls['title'].errors &&
+              recipeForm.controls['title'].errors.required
+            "
+          >
+            Title is required.
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-md-4">Description</label>
+        <textarea
+          class="form-control"
+          rows="3"
+          formControlName="description"
+          #description
+        ></textarea>
+        <div
+          *ngIf="
+            recipeForm.controls['description'].invalid &&
+            (recipeForm.controls['description'].dirty ||
+              recipeForm.controls['description'].touched)
+          "
+          class="alert alert-danger"
+        >
+          <div
+            *ngIf="
+              recipeForm.controls['description'].errors &&
+              recipeForm.controls['description'].errors.required
+            "
+          >
+            Description is required.
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-md-4">Servings</label>
+        <input
+          type="number"
+          class="form-control"
+          formControlName="servings"
+          #servings
+        />
+        <div
+          *ngIf="
+            recipeForm.controls['servings'].invalid &&
+            (recipeForm.controls['servings'].dirty ||
+              recipeForm.controls['servings'].touched)
+          "
+          class="alert alert-danger"
+        >
+          <div
+            *ngIf="
+              recipeForm.controls['servings'].errors &&
+              recipeForm.controls['servings'].errors.required
+            "
+          >
+            Servings is required.
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-md-4">Prep Time</label>
+        <input
+          type="number"
+          class="form-control"
+          formControlName="prepTime"
+          #prepTime
+        />
+        <div
+          *ngIf="
+            recipeForm.controls['prepTime'].invalid &&
+            (recipeForm.controls['prepTime'].dirty ||
+              recipeForm.controls['prepTime'].touched)
+          "
+          class="alert alert-danger"
+        >
+          <div
+            *ngIf="
+              recipeForm.controls['prepTime'].errors &&
+              recipeForm.controls['prepTime'].errors.required
+            "
+          >
+            Prep Time is required.
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-md-4">Cook Time</label>
+        <input
+          type="number"
+          class="form-control"
+          formControlName="cookTime"
+          #cookTime
+        />
+        <div
+          *ngIf="
+            recipeForm.controls['cookTime'].invalid &&
+            (recipeForm.controls['cookTime'].dirty ||
+              recipeForm.controls['cookTime'].touched)
+          "
+          class="alert alert-danger"
+        >
+          <div
+            *ngIf="
+              recipeForm.controls['cookTime'].errors &&
+              recipeForm.controls['cookTime'].errors.required
+            "
+          >
+            Prep Time is required.
+          </div>
+        </div>
+      </div>
+
+      <div class="card-group">
+        <div class="card mx-1">
+          <div class="card-header">Ingredients</div>
+          <div class="card-body">
+            <div formArrayName="ingredients">
+              <!-- <ng-container
+                *ngFor="
+                  let ingredientsFormGroup of ingredientsFormGroups;
+                  let i = index
+                "
+              > -->
+              <ng-container
+                *ngFor="let ingredients of ingredientsFormGroups; let i = index"
+              >
+                <div [formGroupName]="i">
+                  <input type="text" placeholder="id" formControlName="id" />
+                  <input
+                    type="text"
+                    placeholder="name"
+                    formControlName="name"
+                  />
+                  <input
+                    type="text"
+                    placeholder="amount"
+                    formControlName="amount"
+                  />
+                  <input
+                    type="text"
+                    placeholder="measurement"
+                    formControlName="measurement"
+                  />
+                </div>
+              </ng-container>
+            </div>
+          </div>
+          <div class="footer">
+            <button class="btn btn-primary" (click)="addIngredientField()">
+              Add new ingredient
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <button type="submit" class="btn btn-primary mr-1">Submit</button>
+        <button class="btn btn-primary" (click)="clearForm()">Clear</button>
+      </div>
+    </form>
+  </div>
+</div>

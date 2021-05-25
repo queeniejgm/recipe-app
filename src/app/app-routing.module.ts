@@ -9,7 +9,7 @@ const routes: Routes = [
     path: 'recipe',
     component: RecipeListComponent,
   },
-  { path: 'recipe-form', component: RecipeFormComponent },
+  { path: 'create-recipe', component: RecipeFormComponent },
   { path: 'recipe-details', component: RecipeDetailsComponent },
   { path: '**', redirectTo: 'recipe' },
 ];

@@ -49,4 +49,31 @@ export class RecipeState {
       })
     );
   }
+
+  @Action(AddRecipe)
+  addRecipe(
+    { getState, patchState }: StateContext<RecipeStateModel>,
+    { payload }: AddRecipe
+  ) {
+    return this.recipeService.addRecipe(payload).pipe(
+      tap((result) => {
+        const state = getState();
+        patchState({
+          recipes: [...state.recipes, result],
+        });
+      })
+    );
+  }
+
+  @Action(SetSelectedRecipe)
+  setSelectedRecipeId(
+    { getState, setState }: StateContext<RecipeStateModel>,
+    { payload }: SetSelectedRecipe
+  ) {
+    const state = getState();
+    setState({
+      ...state,
+      selectedRecipe: payload,
+    });
+  }
 }

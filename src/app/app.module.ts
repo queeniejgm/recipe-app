@@ -11,9 +11,10 @@ import { RecipeListComponent } from './components/recipe-list/recipe-list.compon
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RecipeState } from './states/recipe.state';
+import { RecipeFormComponent } from './components/recipe-form/recipe-form.component';
 
 @NgModule({
-  declarations: [AppComponent, RecipeListComponent],
+  declarations: [AppComponent, RecipeListComponent, RecipeFormComponent],
   imports: [
     BrowserModule,
     NgxsModule.forRoot([RecipeState]),

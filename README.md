@@ -1,6 +1,10 @@
 # RecipeApp
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.2.13.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.2.13. This project serves as front end skill test application of Queenie Jaybee Barcoma to Crescendo Collective
+
+## To install and run, use the commands below:
+ Markup : * npm i
+          * ng serve
 
 ## Development server
 

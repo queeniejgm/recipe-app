@@ -33,4 +33,6 @@ export class RecipeListComponent implements OnInit {
     this.store.dispatch(new SetSelectedRecipe(recipe));
     this.router.navigate(['/recipe-details']);
   }
+
+  addRecipe() {}
 }

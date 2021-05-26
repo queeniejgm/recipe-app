@@ -2,7 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
-import { GetRecipes, SetSelectedRecipe } from 'src/app/actions/recipe.action';
+import {
+  DeleteRecipe,
+  GetRecipes,
+  SetSelectedRecipe,
+} from 'src/app/actions/recipe.action';
 import { Recipe } from 'src/app/models/recipe';
 import { RecipeState } from 'src/app/states/recipe.state';
 
@@ -36,5 +40,9 @@ export class RecipeListComponent implements OnInit {
 
   addRecipe() {
     this.router.navigate(['/create-recipe']);
+  }
+
+  deleteRecipe(id: String) {
+    this.store.dispatch(new DeleteRecipe(id));
   }
 }

@@ -10,7 +10,11 @@ import {
 import { ActivatedRoute, Router } from '@angular/router';
 import { Select, Store } from '@ngxs/store';
 import { Observable, Subscription } from 'rxjs';
-import { SetSelectedRecipe, UpdateRecipe } from 'src/app/actions/recipe.action';
+import {
+  AddRecipe,
+  SetSelectedRecipe,
+  UpdateRecipe,
+} from 'src/app/actions/recipe.action';
 import { Recipe } from 'src/app/models/recipe';
 import { RecipeState } from 'src/app/states/recipe.state';
 
@@ -22,7 +26,7 @@ import { RecipeState } from 'src/app/states/recipe.state';
 export class RecipeFormComponent implements OnInit {
   @Select(RecipeState.getSelectedRecipe) selectedRecipe: Observable<Recipe>;
   recipeForm: FormGroup;
-  editTodo = false;
+  editRecipe = false;
   ingredientForm = [];
   private formSubscription: Subscription = new Subscription();
 
@@ -35,22 +39,7 @@ export class RecipeFormComponent implements OnInit {
     this.createForm();
   }
 
-  ngOnInit() {
-    this.formSubscription.add(
-      this.selectedRecipe.subscribe((todo) => {
-        if (todo) {
-          this.recipeForm.patchValue({
-            // id: todo.id,
-            // userId: todo.userId,
-            // title: todo.title,
-          });
-          this.editTodo = true;
-        } else {
-          this.editTodo = false;
-        }
-      })
-    );
-  }
+  ngOnInit() {}
 
   createForm() {
     this.recipeForm = this.fb.group({
@@ -59,43 +48,68 @@ export class RecipeFormComponent implements OnInit {
       servings: ['', Validators.required],
       prepTime: ['', Validators.required],
       cookTime: ['', Validators.required],
-      ingredients: this.fb.array([{ name: '', amount: 0, measurement: '' }]),
-      directions: this.fb.group({
-        instructions: '',
-        optional: false,
+      ingredients: this.fb.array([
+        this.fb.group({ name: 'test', amount: 0, measurement: 'test' }),
+      ]),
+      directions: this.fb.array([
+        this.fb.group({ instructions: 'test', optional: false }),
+      ]),
+      images: this.fb.group({
+        full: 'full.jpg',
+        medium: 'medium.jpg',
+        small: 'small.jpg',
       }),
     });
   }
 
   get ingredientsFormGroups() {
-    return this.recipeForm?.controls[0]?.get('ingredients')?.value;
+    return this.recipeForm.get('ingredients') as FormArray;
   }
 
-  addIngredientField() {}
+  addIngredientField() {
+    let newIngredientGroup: any = [];
+
+    newIngredientGroup['name'] = new FormControl('', Validators.required);
+    newIngredientGroup['amount'] = new FormControl(0, Validators.required);
+    newIngredientGroup['measurement'] = new FormControl(
+      '',
+      Validators.required
+    );
+
+    (<FormArray>this.recipeForm.controls.ingredients).push(
+      this.fb.group(newIngredientGroup)
+    );
+  }
+
+  get directionsFormGroups() {
+    return this.recipeForm.get('directions') as FormArray;
+  }
+
+  addDirectionsField() {
+    let newDirectionGroup: any = [];
+
+    newDirectionGroup['instructions'] = new FormControl(
+      '',
+      Validators.required
+    );
+    newDirectionGroup['optional'] = new FormControl(false, Validators.required);
+
+    (<FormArray>this.recipeForm.controls.directions).push(
+      this.fb.group(newDirectionGroup)
+    );
+  }
 
   onSubmit() {
-    // if (this.editTodo) {
-    //   this.formSubscription.add(
-    //     this.store
-    //       .dispatch(
-    //         new UpdateRecipe(this.recipeForm.value, this.recipeForm.value.id)
-    //       )
-    //       .subscribe(() => {
-    //         this.clearForm();
-    //       })
-    //   );
-    // } else {
-    //   this.formSubscription.add(
-    //     (this.formSubscription = this.store
-    //       .dispatch(new AddTodo(this.recipeForm.value))
-    //       .subscribe(() => {
-    //         this.clearForm();
-    //       }))
-    //   );
-    // }
+    this.formSubscription.add(
+      (this.formSubscription = this.store
+        .dispatch(new AddRecipe(this.recipeForm.value))
+        .subscribe(() => {
+          this.router.navigate(['/recipe']);
+        }))
+    );
   }
 
-  clearForm() {
-    this.recipeForm.reset();
+  backToList() {
+    this.router.navigate(['/recipe']);
   }
 }

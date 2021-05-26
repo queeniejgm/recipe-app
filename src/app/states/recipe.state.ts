@@ -76,4 +76,27 @@ export class RecipeState {
       selectedRecipe: payload,
     });
   }
+
+  @Action(UpdateRecipe)
+  updateRecipe(
+    { getState, setState }: StateContext<RecipeStateModel>,
+    { payload, id }: UpdateRecipe
+  ) {}
+
+  @Action(DeleteRecipe)
+  deleteRecipe(
+    { getState, setState }: StateContext<RecipeStateModel>,
+    { id }: DeleteRecipe
+  ) {
+    return this.recipeService.deleteRecipe(id).pipe(
+      tap(() => {
+        const state = getState();
+        const filteredArray = state.recipes.filter((item) => item.uuid !== id);
+        setState({
+          ...state,
+          recipes: filteredArray,
+        });
+      })
+    );
+  }
 }

@@ -19,7 +19,7 @@ export class UpdateRecipe {
 export class DeleteRecipe {
   static readonly type = '[Recipe] Delete';
 
-  constructor(public id: number) {}
+  constructor(public id: String) {}
 }
 
 export class SetSelectedRecipe {

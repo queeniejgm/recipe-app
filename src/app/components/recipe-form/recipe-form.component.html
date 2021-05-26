@@ -1,6 +1,10 @@
-<div class="card mt-3">
-  <div class="card-body">
-    <form [formGroup]="recipeForm" (ngSubmit)="onSubmit()">
+<form [formGroup]="recipeForm" (ngSubmit)="onSubmit()">
+  <div class="card mt-3">
+    <div class="card-header">
+      <h5>Create new recipe</h5>
+    </div>
+
+    <div class="card-body">
       <div class="form-group">
         <label class="col-md-4">Title</label>
         <input
@@ -27,6 +31,7 @@
           </div>
         </div>
       </div>
+
       <div class="form-group">
         <label class="col-md-4">Description</label>
         <textarea
@@ -135,42 +140,50 @@
         </div>
       </div>
 
-      <div class="card-group">
+      <div class="card-group mt-2">
         <div class="card mx-1">
           <div class="card-header">Ingredients</div>
           <div class="card-body">
             <div formArrayName="ingredients">
-              <!-- <ng-container
+              <div class="row">
+                <label class="form-label col">Name</label>
+                <label class="form-label col">Amount</label>
+                <label class="form-label col">Measurement</label>
+              </div>
+              <ng-container
                 *ngFor="
-                  let ingredientsFormGroup of ingredientsFormGroups;
+                  let ingredients of ingredientsFormGroups.controls;
                   let i = index
                 "
-              > -->
-              <ng-container
-                *ngFor="let ingredients of ingredientsFormGroups; let i = index"
               >
-                <div [formGroupName]="i">
-                  <input type="text" placeholder="id" formControlName="id" />
-                  <input
-                    type="text"
-                    placeholder="name"
-                    formControlName="name"
-                  />
-                  <input
-                    type="text"
-                    placeholder="amount"
-                    formControlName="amount"
-                  />
-                  <input
-                    type="text"
-                    placeholder="measurement"
-                    formControlName="measurement"
-                  />
+                <div [formGroupName]="i" class="form-group row my-1">
+                  <div class="col">
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="Ingredient name.."
+                      formControlName="name"
+                    />
+                  </div>
+                  <div class="col">
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="Amount"
+                      formControlName="amount"
+                    />
+                  </div>
+                  <div class="col">
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="Measurement"
+                      formControlName="measurement"
+                    />
+                  </div>
                 </div>
               </ng-container>
             </div>
-          </div>
-          <div class="footer">
             <button class="btn btn-primary" (click)="addIngredientField()">
               Add new ingredient
             </button>
@@ -178,10 +191,53 @@
         </div>
       </div>
 
-      <div class="form-group">
-        <button type="submit" class="btn btn-primary mr-1">Submit</button>
-        <button class="btn btn-primary" (click)="clearForm()">Clear</button>
+      <div class="card-group mt-2">
+        <div class="card mx-1">
+          <div class="card-header">Directions</div>
+          <div class="card-body">
+            <div formArrayName="directions">
+              <div class="row">
+                <label class="form-label col-10">Instructions</label>
+                <label class="form-label col">Is optional?</label>
+              </div>
+              <ng-container
+                *ngFor="
+                  let ingredients of directionsFormGroups.controls;
+                  let i = index
+                "
+              >
+                <div [formGroupName]="i" class="form-group row my-1">
+                  <div class="col-10">
+                    <textarea
+                      class="form-control"
+                      placeholder="Instructions.."
+                      formControlName="instructions"
+                    ></textarea>
+                  </div>
+                  <div class="col">
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        value=""
+                        id="flexCheckDefault"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </ng-container>
+            </div>
+            <button class="btn btn-primary" (click)="addDirectionsField()">
+              Add new instruction
+            </button>
+          </div>
+        </div>
       </div>
-    </form>
+    </div>
+
+    <div class="card-footer text-right">
+      <button type="submit" class="btn btn-danger mr-1">Submit</button>
+      <button class="btn btn-light mx-2" (click)="backToList()">Cancel</button>
+    </div>
   </div>
-</div>
+</form>

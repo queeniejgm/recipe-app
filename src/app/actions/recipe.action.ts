@@ -13,7 +13,7 @@ export class GetRecipes {
 export class UpdateRecipe {
   static readonly type = '[Recipe] Update';
 
-  constructor(public payload: Recipe, public id: number) {}
+  constructor(public payload: Recipe, public id: String) {}
 }
 
 export class DeleteRecipe {

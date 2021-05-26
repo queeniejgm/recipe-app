@@ -32,7 +32,7 @@ export class RecipeListComponent implements OnInit {
 
   editRecipe(recipe: Recipe) {
     this.store.dispatch(new SetSelectedRecipe(recipe));
-    this.router.navigate(['../recipe-form']);
+    this.router.navigate(['/create-recipe']);
   }
 
   viewRecipe(recipe: Recipe) {

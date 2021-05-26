@@ -19,4 +19,11 @@ export class RecipeService {
   addRecipe(payload: Recipe) {
     return this.http.post<Recipe>('http://localhost:3001/recipes', payload);
   }
+
+  updateRecipe(payload: Recipe, id: String) {
+    return this.http.put<Recipe>(
+      'http://localhost:3001/recipes/' + id,
+      payload
+    );
+  }
 }

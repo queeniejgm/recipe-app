@@ -81,7 +81,20 @@ export class RecipeState {
   updateRecipe(
     { getState, setState }: StateContext<RecipeStateModel>,
     { payload, id }: UpdateRecipe
-  ) {}
+  ) {
+    return this.recipeService.updateRecipe(payload, id).pipe(
+      tap((result) => {
+        const state = getState();
+        const RecipeList = [...state.recipes];
+        const RecipeIndex = RecipeList.findIndex((item) => item.uuid === id);
+        RecipeList[RecipeIndex] = result;
+        setState({
+          ...state,
+          recipes: RecipeList,
+        });
+      })
+    );
+  }
 
   @Action(DeleteRecipe)
   deleteRecipe(

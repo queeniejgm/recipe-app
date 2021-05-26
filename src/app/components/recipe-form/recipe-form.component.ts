@@ -28,6 +28,7 @@ export class RecipeFormComponent implements OnInit {
   recipeForm: FormGroup;
   editRecipe = false;
   ingredientForm = [];
+  recipeId: String;
   private formSubscription: Subscription = new Subscription();
 
   constructor(
@@ -39,7 +40,34 @@ export class RecipeFormComponent implements OnInit {
     this.createForm();
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.formSubscription.add(
+      this.selectedRecipe.subscribe((recipe) => {
+        if (recipe) {
+          this.recipeId = recipe.uuid;
+          this.recipeForm.patchValue({
+            ...recipe,
+          });
+
+          recipe.ingredients.forEach((item) => {
+            (<FormArray>this.recipeForm.controls.ingredients).push(
+              this.fb.group(item)
+            );
+          });
+
+          recipe.directions.forEach((item) => {
+            (<FormArray>this.recipeForm.controls.directions).push(
+              this.fb.group(item)
+            );
+          });
+
+          this.editRecipe = true;
+        } else {
+          this.editRecipe = false;
+        }
+      })
+    );
+  }
 
   createForm() {
     this.recipeForm = this.fb.group({
@@ -49,16 +77,18 @@ export class RecipeFormComponent implements OnInit {
       prepTime: ['', Validators.required],
       cookTime: ['', Validators.required],
       ingredients: this.fb.array([
-        this.fb.group({ name: 'test', amount: 0, measurement: 'test' }),
+        this.fb.group({ name: '', amount: 0, measurement: '' }),
       ]),
       directions: this.fb.array([
-        this.fb.group({ instructions: 'test', optional: false }),
+        this.fb.group({ instructions: '', optional: false }),
       ]),
       images: this.fb.group({
-        full: 'full.jpg',
-        medium: 'medium.jpg',
-        small: 'small.jpg',
+        full: null,
+        medium: null,
+        small: null,
       }),
+      postDate: [new Date()],
+      editDate: [new Date()],
     });
   }
 
@@ -100,13 +130,24 @@ export class RecipeFormComponent implements OnInit {
   }
 
   onSubmit() {
-    this.formSubscription.add(
-      (this.formSubscription = this.store
-        .dispatch(new AddRecipe(this.recipeForm.value))
-        .subscribe(() => {
-          this.router.navigate(['/recipe']);
-        }))
-    );
+    if (this.editRecipe) {
+      this.formSubscription.add(
+        this.store
+          .dispatch(new UpdateRecipe(this.recipeForm.value, this.recipeId))
+          .subscribe(() => {
+            this.router.navigate(['/recipe']);
+          })
+      );
+    } else {
+      console.log('!!! formVal', this.recipeForm.value);
+      this.formSubscription.add(
+        (this.formSubscription = this.store
+          .dispatch(new AddRecipe(this.recipeForm.value))
+          .subscribe(() => {
+            this.router.navigate(['/recipe']);
+          }))
+      );
+    }
   }
 
   backToList() {

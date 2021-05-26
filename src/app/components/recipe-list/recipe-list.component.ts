@@ -25,7 +25,9 @@ export class RecipeListComponent implements OnInit {
   }
 
   getRecipeThumbnail(fileName: String) {
-    return 'http://localhost:3001' + fileName;
+    return fileName
+      ? 'http://localhost:3001' + fileName
+      : './assets/logo-white.webp';
   }
 
   editRecipe(recipe: Recipe) {

@@ -16,50 +16,60 @@
     </div>
   </div>
   <div class="row">
-    <div class="col">
+    <div class="col-12">
       <div class="card-group">
-        <div class="card mx-1" *ngFor="let recipe of recipeList$ | async">
-          <img
-            [src]="getRecipeThumbnail(recipe.images.medium)"
-            class="card-img-top"
-            [alt]="recipe.title"
-          />
-          <div class="card-body">
-            <h5 class="card-title">{{ recipe.title }}</h5>
-            <p class="card-text">
-              {{ recipe.description }}
-            </p>
-            <p class="card-text">
-              <small class="text-muted"
-                >Last updated: {{ recipe.editDate }}</small
-              >
-            </p>
-            <p class="card-text text-center">
-              <button
-                type="button"
-                class="btn btn-light pull-right"
-                (click)="viewRecipe(recipe)"
-              >
-                View
-              </button>
-              <button
-                type="button"
-                class="btn btn-light pull-right px-1 mx-2"
-                (click)="editRecipe(recipe)"
-              >
-                Edit
-              </button>
-              <button
-                type="button"
-                class="btn btn-danger pull-right"
-                (click)="deleteRecipe(recipe.uuid)"
-              >
-                Delete
-              </button>
-            </p>
+        <div class="row">
+          <div class="col-3 mt-3" *ngFor="let recipe of recipeList$ | async">
+            <div class="card mx-1">
+              <img
+                [src]="getRecipeThumbnail(recipe.images.medium)"
+                class="card-img-top"
+                [alt]="recipe.title"
+              />
+              <div class="card-body">
+                <h5 class="card-title">{{ recipe.title }}</h5>
+                <p class="card-text">
+                  {{ recipe.description }}
+                </p>
+                <p class="card-text">
+                  <small class="text-muted"
+                    >Last updated:
+                    {{ recipe.editDate || recipe.postDate }}</small
+                  >
+                </p>
+                <p class="card-text text-center">
+                  <button
+                    type="button"
+                    class="btn btn-light pull-right"
+                    (click)="viewRecipe(recipe)"
+                  >
+                    View
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-light pull-right px-1 mx-2"
+                    (click)="editRecipe(recipe)"
+                  >
+                    Edit
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-danger pull-right"
+                    (click)="deleteRecipe(recipe.uuid)"
+                  >
+                    Delete
+                  </button>
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
+    </div>
+  </div>
+  <div class="row mt-5 text-center">
+    <div class="col">
+      <h6>© Queenie Jaybee Barcoma | All rights reserved.</h6>
     </div>
   </div>
 </div>

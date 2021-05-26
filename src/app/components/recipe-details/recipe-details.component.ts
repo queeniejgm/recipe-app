@@ -16,20 +16,12 @@ export class RecipeDetailsComponent implements OnInit {
 
   constructor(private store: Store, private router: Router) {}
 
-  ngOnInit(): void {
-    this.selectedRecipe$.subscribe((todo) => {
-      if (todo) {
-      } else {
-        // this.editTodo = false;
-      }
-    });
-  }
+  ngOnInit(): void {}
 
   getRecipeThumbnail(fileName: String | undefined) {
-    if (!fileName) {
-      return;
-    }
-    return 'http://localhost:3001' + fileName;
+    return fileName
+      ? 'http://localhost:3001' + fileName
+      : './assets/logo-white.webp';
   }
 
   backToList() {

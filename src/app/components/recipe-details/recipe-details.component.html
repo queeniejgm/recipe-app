@@ -54,6 +54,11 @@
             >
               <label class="pull-left ingredient-name">
                 {{ direction.instructions }}
+                <span
+                  [hidden]="!direction.optional"
+                  class="badge rounded-pill bg-danger quantity"
+                  >optional</span
+                >
               </label>
             </li>
           </ol>
